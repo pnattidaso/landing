@@ -4,6 +4,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import {vercelBlobStorage} from '@payloadcms/storage-vercel-blob';
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -32,5 +33,14 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    vercelBlobStorage({
+      enabled: true,
+      collections:{
+        Media: true
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  
+  ],
 })
